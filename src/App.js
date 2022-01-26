@@ -27,6 +27,7 @@ const App = () => {
                 }
             });
             setPhotos(res.data.data);
+            console.log(res.data.data);
         }
        
         async function getAffirmation() {
@@ -48,15 +49,13 @@ const App = () => {
             <h1>Stock Affirmations</h1>
             <h2>When you just need that extra pick me up.</h2>
             <PhotoGrid>
-                <StockPhoto></StockPhoto>
                 {
-                photos.map((image) => (
+                photos.map((photo) => (
                     <StockPhoto
-                        url={image.url}
+                        key={photo.id}
+                        url={photo.assets.preview.url}
                     />
-                ))}
-                {
-                // console.log(imageArray)
+                ))
                 }
             </PhotoGrid>
         </div>
