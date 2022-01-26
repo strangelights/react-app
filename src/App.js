@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { SS_BASE_URL, AFF_BASE_URL } from './globals';
+import axios from 'axios';
+import PhotoGrid from './components/PhotoGrid';
+import StockPhoto from './components/StockPhoto';
 import './styles/App.css';
 
 const App = () => {
 
     const username = process.env.REACT_APP_SHUTTERSTOCK_KEY;
     const password = process.env.REACT_APP_SHUTTERSTOCK_SECRET;
-
+    // let imageArray = [];
+    const [photos, setPhotos] = useState([]);
+    const [affirmations, setAffirmations] = useState([]);
+    
     useEffect(() => {
         
         async function getStockPhoto() {
             const res = await axios.get(`${SS_BASE_URL}/v2/images/search`, {
                 params:{
-                    query: "affirmation"
+                    query: "confused",
+                    per_page: 2
                 },
                 auth: {
                   username: username,
                   password: password
                 }
             });
-            console.log(res);
+            setPhotos(res.data.data);
         }
        
         async function getAffirmation() {
@@ -28,14 +34,31 @@ const App = () => {
             console.log(res.data[0].phrase[1].toUpperCase() + res.data[0].phrase.substring(2)); 
         }
 
-        getStockPhoto();
+        // imageArray = getStockPhoto();
         getAffirmation();
+        // console.log(imageArray);
+        console.log(getStockPhoto());
     }, []);
+
+    /*-------Line of Understanding-------------*/
+
 
     return (
         <div className="App">
-        <h2>Stock Affirmations</h2>
-        <h3>When you just need that extra pick me up.</h3>
+            <h1>Stock Affirmations</h1>
+            <h2>When you just need that extra pick me up.</h2>
+            <PhotoGrid>
+                <StockPhoto></StockPhoto>
+                {
+                photos.map((image) => (
+                    <StockPhoto
+                        url={image.url}
+                    />
+                ))}
+                {
+                // console.log(imageArray)
+                }
+            </PhotoGrid>
         </div>
     );
 }
