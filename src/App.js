@@ -20,7 +20,9 @@ const App = () => {
                   password: password
                 }
             });
-            console.log(res); 
+            console.log(res);
+            console.log(username);
+            console.log(password);
         }
 
         async function getAffirmation() {
@@ -31,6 +33,7 @@ const App = () => {
         getStockPhoto();
         getAffirmation();
     }, []);
+
 
     return (
         <div className="App">
