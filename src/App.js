@@ -24,7 +24,8 @@ const App = () => {
             console.log(username);
             console.log(password);
         }
-
+        console.log(username);
+        console.log(password);
         async function getAffirmation() {
             const res = await axios.get(AFF_BASE_URL);
             console.log(res.data[0].phrase[1].toUpperCase() + res.data[0].phrase.substring(2)); 
