@@ -1,1 +1,3 @@
-# My React App
+# Stock Affirmations
+
+## https://stock-affirmations.herokuapp.com/
