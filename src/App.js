@@ -13,7 +13,7 @@ const App = () => {
     const password = process.env.REACT_APP_SHUTTERSTOCK_SECRET;
     const [photos, setPhotos] = useState([]);
     const [affirmations, setAffirmations] = useState([]);
-    const count = 6;
+    const count = 9;
     
     useEffect(() => {
         
@@ -36,29 +36,31 @@ const App = () => {
         async function getAffirmation() {
             const res = await axios.get(AFF_BASE_URL);
             const affirmation = res.data[0].phrase[1].toUpperCase() + res.data[0].phrase.substring(2);
-            let affirmationArray = [...affirmation];
+            
+            let affirmationArray = affirmations;
+            affirmationArray.push(affirmation);
             setAffirmations(affirmationArray); 
-            console.log(affirmationArray);
         }
 
         for (let i = 0; i < count; i++) {
             getAffirmation();
         }
+
         getStockPhoto();
     }, []);
 
     return (
         <div className="App">
             <h1>Stock Affirmations</h1>
-            <h2>When you need that extra pick-me-up</h2>
+            <h2>For when you need that extra pick-me-up</h2>
             <PhotoGrid>
-                {photos.map((photo) => (
+                {photos.map((photo, index) => (
                     <div className="overlay-container" key={photo.id}>
                         <StockPhoto
                             url={photo.assets.preview.url}
                         />
                         <Affirmation 
-                            text={affirmations}
+                            text={affirmations[index]}
                         />
                         <CopyFile/>
                     </div>
@@ -69,4 +71,3 @@ const App = () => {
 }
 
 export default App;
- 
