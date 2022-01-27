@@ -74,6 +74,14 @@ h2 {
     margin-right: 4px;
 }
 
+.copy {
+    z-index: 0;
+    position: absolute;
+    top: 15%;
+    font-size: 20px;
+    background-color: white;
+}
+
 .overlay-container {
     position: relative;
     max-width:100%;

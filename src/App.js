@@ -5,6 +5,7 @@ import PhotoGrid from './components/PhotoGrid';
 import StockPhoto from './components/StockPhoto';
 import Affirmation from './components/Affirmation';
 import './styles/App.css';
+import CopyFile from './components/CopyFile';
 
 const App = () => {
 
@@ -59,6 +60,7 @@ const App = () => {
                         <Affirmation 
                             text={affirmations}
                         />
+                        <CopyFile/>
                     </div>
                 ))}
             </PhotoGrid>
