@@ -20,7 +20,8 @@ const App = () => {
             const res = await axios.get(`${SS_BASE_URL}/v2/images/search`, {
                 params:{
                     query: "confused",
-                    per_page: count
+                    per_page: count,
+                    aspect_ratio: 1.5
                 },
                 auth: {
                   username: username,
