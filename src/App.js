@@ -3,15 +3,16 @@ import { SS_BASE_URL, AFF_BASE_URL } from './globals';
 import axios from 'axios';
 import PhotoGrid from './components/PhotoGrid';
 import StockPhoto from './components/StockPhoto';
+import Affirmation from './components/Affirmation';
 import './styles/App.css';
 
 const App = () => {
 
     const username = process.env.REACT_APP_SHUTTERSTOCK_KEY;
     const password = process.env.REACT_APP_SHUTTERSTOCK_SECRET;
-    // let imageArray = [];
     const [photos, setPhotos] = useState([]);
     const [affirmations, setAffirmations] = useState([]);
+    const count = 6;
     
     useEffect(() => {
         
@@ -19,7 +20,7 @@ const App = () => {
             const res = await axios.get(`${SS_BASE_URL}/v2/images/search`, {
                 params:{
                     query: "confused",
-                    per_page: 2
+                    per_page: count
                 },
                 auth: {
                   username: username,
@@ -27,36 +28,37 @@ const App = () => {
                 }
             });
             setPhotos(res.data.data);
-            console.log(res.data.data);
         }
        
         async function getAffirmation() {
             const res = await axios.get(AFF_BASE_URL);
-            console.log(res.data[0].phrase[1].toUpperCase() + res.data[0].phrase.substring(2)); 
+            const affirmation = res.data[0].phrase[1].toUpperCase() + res.data[0].phrase.substring(2);
+            let affirmationArray = [...affirmation];
+            setAffirmations(affirmationArray); 
+            console.log(affirmationArray);
         }
 
-        // imageArray = getStockPhoto();
-        getAffirmation();
-        // console.log(imageArray);
-        console.log(getStockPhoto());
+        for (let i = 0; i < count; i++) {
+            getAffirmation();
+        }
+        getStockPhoto();
     }, []);
-
-    /*-------Line of Understanding-------------*/
-
 
     return (
         <div className="App">
             <h1>Stock Affirmations</h1>
-            <h2>When you just need that extra pick me up.</h2>
+            <h2>When you need that extra pick-me-up</h2>
             <PhotoGrid>
-                {
-                photos.map((photo) => (
-                    <StockPhoto
-                        key={photo.id}
-                        url={photo.assets.preview.url}
-                    />
-                ))
-                }
+                {photos.map((photo) => (
+                    <div className="overlay-container" key={photo.id}>
+                        <StockPhoto
+                            url={photo.assets.preview.url}
+                        />
+                        <Affirmation 
+                            text={affirmations}
+                        />
+                    </div>
+                ))}
             </PhotoGrid>
         </div>
     );
