@@ -21,7 +21,8 @@ const App = () => {
                 params:{
                     query: "confused",
                     per_page: count,
-                    aspect_ratio: 1.5
+                    aspect_ratio: 1.5,
+                    category: "people"
                 },
                 auth: {
                   username: username,
