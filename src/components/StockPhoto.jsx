@@ -4,8 +4,7 @@ function StockPhoto(props) {
     
     return (
         <div className="photo">
-            <p>This is a StockPhoto component</p>
-            <img src={props.url} alt="stock photo" />
+            <img src={props.url} alt="stock photo"/>
         </div>
     )
 };
