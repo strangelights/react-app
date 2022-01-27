@@ -16,7 +16,20 @@ const App = () => {
     const count = 9;
     
     useEffect(() => {
-        
+         
+        async function getAffirmation() {
+            const res = await axios.get(AFF_BASE_URL);
+            const affirmation = res.data[0].phrase[1].toUpperCase() + res.data[0].phrase.substring(2);
+            
+            let affirmationArray = affirmations;
+            affirmationArray.push(affirmation);
+            setAffirmations(affirmationArray); 
+        }
+       
+        for (let i = 0; i < count; i++) {
+            getAffirmation();
+        }
+
         async function getStockPhoto() {
             const res = await axios.get(`${SS_BASE_URL}/v2/images/search`, {
                 params:{
@@ -33,19 +46,6 @@ const App = () => {
             setPhotos(res.data.data);
         }
        
-        async function getAffirmation() {
-            const res = await axios.get(AFF_BASE_URL);
-            const affirmation = res.data[0].phrase[1].toUpperCase() + res.data[0].phrase.substring(2);
-            
-            let affirmationArray = affirmations;
-            affirmationArray.push(affirmation);
-            setAffirmations(affirmationArray); 
-        }
-
-        for (let i = 0; i < count; i++) {
-            getAffirmation();
-        }
-
         getStockPhoto();
     }, []);
 
